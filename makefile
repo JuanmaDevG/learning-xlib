@@ -1,4 +1,4 @@
-.PHONY: clean startup
+.PHONY: clean
 
 #TODO: Make selections.c to work
 
