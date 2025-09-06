@@ -1,36 +1,35 @@
 .PHONY: clean startup
 
-base_dir=concepts
-advanced_dir=interactive
+#TODO: Make selections.c to work
 
-build_dir=build
-compile_command=gcc $^ -lX11 -o $@
+BASE_DIR=concepts
+ADVANCED_DIR=interactive
 
+BUILD_DIR=build
+COMPILE_COMMAND = [ ! -d $(BUILD_DIR) ] && mkdir $(BUILD_DIR); \
+									gcc $^ -lX11 -o $(BUILD_DIR)/$@
 
-all: window attributes atoms properties selections
-
-window: $(base_dir)/window.c
-	$(compile_command)
-
-attributes: $(base_dir)/info.c
-	$(compile_command)
-
-atoms: $(base_dir)/atoms.c
-	$(compile_command)
-
-properties: $(base_dir)/properties.c
-	$(compile_command)
-
-graphics-context: $(base_dir)/graphics_context.c
-	$(compile_command)
+#TODO: make a general rule that compiles all separated executables
+EXECUTABLES = window attributes atoms properties
 
 
-startup:
-	echo hi
-	[ ! -d $(build_dir) ] && mkdir -p $(build_dir)
+all: window attributes atoms properties
 
-#Everyone depends on startup rule
-$(build_dir)/%: startup
+window: $(BASE_DIR)/window.c
+	$(COMPILE_COMMAND)
+
+attributes: $(BASE_DIR)/attributes.c
+	$(COMPILE_COMMAND)
+
+atoms: $(BASE_DIR)/atoms.c
+	$(COMPILE_COMMAND)
+
+properties: $(BASE_DIR)/properties.c
+	$(COMPILE_COMMAND)
+
+graphics-context: $(BASE_DIR)/graphics_context.c
+	$(COMPILE_COMMAND)
+
 
 clean:
-	rm -r $(build_dir)
+	rm -r $(BUILD_DIR)
