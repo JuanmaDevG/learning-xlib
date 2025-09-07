@@ -103,9 +103,6 @@ int main()
           return 0;
         }
     }
-    static int a = 0;
-    printf("a = %i\n", a);
-    a++;
     triangle[0].x = wch.width / 2;
     triangle[0].y = (wch.height / 2) - (wch.height / 4);
     triangle[1].x = (wch.width / 2) - (wch.width / 4);
