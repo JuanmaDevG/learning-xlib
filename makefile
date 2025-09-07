@@ -10,10 +10,10 @@ COMPILE_COMMAND = [ ! -d $(BUILD_DIR) ] && mkdir $(BUILD_DIR); \
 									gcc $^ -lX11 -o $(BUILD_DIR)/$@
 
 #TODO: make a general rule that compiles all separated executables
-EXECUTABLES = window attributes atoms properties
+EXECUTABLES = window attributes atoms properties graphics-context
 
 
-all: window attributes atoms properties
+all: $(EXECUTABLES)
 
 window: $(BASE_DIR)/window.c
 	$(COMPILE_COMMAND)

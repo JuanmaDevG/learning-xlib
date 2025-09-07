@@ -60,6 +60,8 @@ int main()
   attr.background_pixel = BlackPixel(disp, screen_num);
   attr.border_pixel = WhitePixel(disp, screen_num);
 
+  wch.x = 0;
+  wch.y = 0;
   wch.width = 800;
   wch.height = 600;
   Window w = XCreateWindow(disp, wroot, 0, 0, 800, 600, 3, 
@@ -87,8 +89,10 @@ int main()
         wch.y = ev.xconfigure.y;
         wch.width = ev.xconfigure.width;
         wch.height = ev.xconfigure.height;
+        wch.border_width = ev.xconfigure.border_width;
         XConfigureWindow(disp, w, CWX | CWY | CWHeight | CWWidth, &wch);
-        //TODO: XConfigureWindow generates a ConfigureNotify loop
+        XFlush(disp);
+        XNextEvent(disp, &ev);
         break;
       case KeyPress:
         KeySym ks = XLookupKeysym(&ev.xkey, 0);
@@ -99,6 +103,9 @@ int main()
           return 0;
         }
     }
+    static int a = 0;
+    printf("a = %i\n", a);
+    a++;
     triangle[0].x = wch.width / 2;
     triangle[0].y = (wch.height / 2) - (wch.height / 4);
     triangle[1].x = (wch.width / 2) - (wch.width / 4);
